@@ -13,4 +13,6 @@ Then go to Tools > Configure Random Fonts
 
 - In the Configure Fonts tab, enable/disable the fonts that you want the randomizer to choose from for each language.
 
+- Save, enjoy.
+
 <img src="https://github.com/AustinHasten/AnkiRandomFont/assets/16011612/c3b74382-7f23-48da-9131-e0d47ce19387" width=30% height=30%>
