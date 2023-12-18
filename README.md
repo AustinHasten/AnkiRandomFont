@@ -15,4 +15,4 @@ Then go to Tools > Configure Random Fonts
 
 - Save, enjoy.
 
-<img src="https://github.com/AustinHasten/AnkiRandomFont/assets/16011612/c3b74382-7f23-48da-9131-e0d47ce19387" width=30% height=30%>
+<img src="https://github.com/AustinHasten/AnkiRandomFont/assets/16011612/a561a6fe-2051-4c31-9d7a-d8fd29e2e40d" width=30% height=30%>
