@@ -1,8 +1,8 @@
 from aqt.qt import Qt, QWidget, QVBoxLayout, QScrollArea, QHBoxLayout, QPushButton, QCheckBox, QButtonGroup, QRadioButton
-from anki.hooks import wrap
+# from anki.hooks import wrap
 from aqt import mw, gui_hooks
 from aqt.utils import showText
-from aqt.previewer import Previewer
+# from aqt.previewer import Previewer
 from .finderWidgets import DeckFinderWidget, NoteTypeFinderWidget, CardStateFinderWidget, TagFinderWidget, SuccessRateFinderWidget, PassFinderWidget, FieldFinderWidget
 from .utils import MyGroupBox
 
@@ -11,20 +11,20 @@ from .utils import MyGroupBox
 # NOTE Should panels have unique config keys instead in case two fall under the same thing?
 # would mean you gotta update those keys if they change for whatever reason
 
+'''
 originalPreviewerBridgeCmd = Previewer._on_bridge_cmd
-
-
 def previewerAns(self, cmd: str):
     if cmd == 'ans':
         self._state = 'answer'
         self.render_card()
+'''
 
 
 class DefaultFinderPanel(QWidget):
     defaults = {
         'logic': 0,
         'negate': False,
-        'applyToPreviewer': True,
+        # 'applyToPreviewer': True,
     }
 
     def __init__(self, modifyQ, modifyA, configRoot, name):
@@ -39,7 +39,7 @@ class DefaultFinderPanel(QWidget):
         self.buildGUI()
         self.readConfig()
 
-        self.previewerToggled(self.previewerCheck.checkState().value)
+        # self.previewerToggled(self.previewerCheck.checkState().value)
 
     def checkCard(self, text, card, kind):
         if kind in ('clayoutQuestion', 'clayoutAnswer'):
@@ -117,6 +117,7 @@ class DefaultFinderPanel(QWidget):
         self.negateCheckBox = QCheckBox('Negate')
         self.logicGroupBoxOuter.layout.addWidget(self.negateCheckBox)
 
+        '''
         self.applyToGroupBox = MyGroupBox('Apply to', QHBoxLayout)
         self.reviewerCheck = QCheckBox('Reviewer')
         self.reviewerCheck.setChecked(True)
@@ -124,11 +125,12 @@ class DefaultFinderPanel(QWidget):
         self.previewerCheck = QCheckBox('Previewer')
         self.applyToGroupBox.layout.addWidget(self.reviewerCheck)
         self.applyToGroupBox.layout.addWidget(self.previewerCheck)
+        '''
 
         self.previewBtn = QPushButton('Preview this Search')
 
         self.innerLayout = QVBoxLayout(self.innerWidget)
-        self.innerLayout.addWidget(self.applyToGroupBox)
+        # self.innerLayout.addWidget(self.applyToGroupBox)
         self.innerLayout.addWidget(self.logicGroupBoxOuter)
         for finder in self.finders:
             self.innerLayout.addWidget(finder)
@@ -136,18 +138,20 @@ class DefaultFinderPanel(QWidget):
         self.outerLayout.addWidget(self.previewBtn)
 
         # Signals/slots
-        self.previewerCheck.stateChanged.connect(self.previewerToggled)
+        # self.previewerCheck.stateChanged.connect(self.previewerToggled)
         self.previewBtn.pressed.connect(self.previewPressed)
 
         # Finishing touches
         self.outerLayout.setContentsMargins(0, 0, 0, 0)
         self.innerLayout.setContentsMargins(5, 5, 5, 5)
 
+    '''
     def previewerToggled(self, state):
         if state == Qt.CheckState.Checked.value:
             Previewer._on_bridge_cmd = wrap(originalPreviewerBridgeCmd, previewerAns, "after")
         else:
             Previewer._on_bridge_cmd = originalPreviewerBridgeCmd
+    '''
 
     def logic(self):
         return self.logicButtonGroup.checkedButton().text()
@@ -174,14 +178,14 @@ class DefaultFinderPanel(QWidget):
     def readConfig(self):
         self.logicButtonGroup.button(self.config.read('logic')).setChecked(True)
         self.negateCheckBox.setChecked(self.config.read('negate'))
-        previewerState = self.config.read('applyToPreviewer')
-        self.previewerCheck.setChecked(previewerState)
+        # previewerState = self.config.read('applyToPreviewer')
+        # self.previewerCheck.setChecked(previewerState)
 
     def writeConfig(self):
         self.config.writes((
             ('logic', self.logicButtonGroup.checkedId()),
             ('negate', self.negateCheckBox.isChecked()),
-            ('applyToPreviewer', self.previewerCheck.isChecked()),
+            # ('applyToPreviewer', self.previewerCheck.isChecked()),
         ))
         for finder in self.finders:
             finder.writeConfig()
